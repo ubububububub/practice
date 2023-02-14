@@ -6,32 +6,37 @@ const regex = { email: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g };
 
 export default function HomeDetail() {
   const { id } = useParams();
+  const {
+    register,
+    watch,
+    reset,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ mode: "onSubmit" });
   // const {
   //   register,
+  //   reset,
   //   watch,
   //   formState: { errors },
   //   handleSubmit,
-  // } = useForm({ mode: "onChange" });
-  const {
-    register,
-    reset,
-    watch,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
-    mode: "onSubmit",
-    defaultValues: {
-      id: "",
-      userId: 0,
-      title: "",
-      body: "",
-    },
-  });
+  // } = useForm({
+  //   mode: "onSubmit",
+  //   defaultValues: {
+  //     id: "",
+  //     userId: 0,
+  //     title: "",
+  //     body: "",
+  //   },
+  // });
   useEventItem(reset, id);
 
   const { id: eventId, userId, title, body } = watch();
 
   const nameRegister = register("name", {
+    required: {
+      value: true,
+      message: "이름은 필수 값입니다.",
+    },
     maxLength: {
       value: 5,
       message: "글자 길이는 최대 5자 입니다.",
@@ -40,6 +45,10 @@ export default function HomeDetail() {
   const ageRegister = register("age");
   const sexRegister = register("sex");
   const priceRegister = register("price", {
+    required: {
+      value: true,
+      message: "가격은 필수 값입니다.",
+    },
     min: {
       value: 300,
       message: "최소 가격은 300원 입니다.",
