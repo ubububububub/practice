@@ -1,32 +1,71 @@
-import { useNavigate } from "react-router-dom";
-import useEventList from "../hooks/useEventList";
+import HomeBorder from "../components/home/HomeBorder";
+import ErrorBoundary from "../components/common/ErrorBoundary";
+import { usePostBody } from "../hooks/home/usePostBody";
+import { usePostCount } from "../hooks/home/usePostCount";
+import { usePostTitle } from "../hooks/home/usePostTitle";
+import { useReducer } from "react";
+import { userReducer } from "../reducers/userReducer";
+
+const initialUserState = {
+  name: "",
+  sex: "",
+  age: 0,
+  hobby: "",
+};
 
 export default function Home() {
-  const { data } = useEventList();
-  const navigate = useNavigate();
+  // const { postTitles, isPostTitlesLoading } = usePostTitle();
+  // const { postBodys, isPostBodysLoading } = usePostBody();
+  // const { postCount, isPostCountLoading } = usePostCount();
 
-  if (!data) {
-    return null;
-  }
+  const [user, dispatch] = useReducer(userReducer, initialUserState);
 
-  const handleDataItemClick = (id) => {
-    navigate(`/${id}`);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(user);
   };
 
-  console.log(data);
-  const mapedData = data.map(({ id, title, body }) => (
-    <div
-      key={id}
-      style={{
-        border: "solid black 2px",
-        marginBottom: "8px",
-      }}
-      onClick={() => handleDataItemClick(id)}
-    >
-      <h3>{title}</h3>
-      <p>{body}</p>
+  return (
+    <div>
+      <h1>Home</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={user.name}
+          onChange={({ target }) =>
+            dispatch({ type: "changed_name", name: target.value })
+          }
+        />
+        <input
+          type="radio"
+          checked={user.sex === "mail"}
+          onChange={() => dispatch({ type: "changed_sex", sex: "mail" })}
+        />
+        <input
+          type="radio"
+          checked={user.sex === "femail"}
+          onChange={() => dispatch({ type: "changed_sex", sex: "femail" })}
+        />
+        <input
+          type="number"
+          value={user.age}
+          onChange={({ target }) =>
+            dispatch({ type: "changed_age", age: target.value })
+          }
+        />
+        <input
+          type="text"
+          value={user.hobby}
+          onChange={({ target }) =>
+            dispatch({ type: "changed_hobby", hobby: target.value })
+          }
+        />
+        <button type="submit">버튼</button>
+      </form>
+      <ErrorBoundary>
+        <HomeBorder />
+      </ErrorBoundary>
     </div>
-  ));
-
-  return <div>{mapedData}</div>;
+  );
 }
