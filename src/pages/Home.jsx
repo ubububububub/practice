@@ -1,10 +1,12 @@
-import HomeBorder from "../components/home/HomeBorder";
+import { HomeBorder } from "../components/home/HomeBorder";
 import ErrorBoundary from "../components/common/ErrorBoundary";
 import { usePostBody } from "../hooks/home/usePostBody";
 import { usePostCount } from "../hooks/home/usePostCount";
 import { usePostTitle } from "../hooks/home/usePostTitle";
 import { useReducer } from "react";
 import { userReducer } from "../reducers/userReducer";
+import Test from "../components/etc/Test";
+import { useRef } from "react";
 
 const initialUserState = {
   name: "",
@@ -19,6 +21,7 @@ export default function Home() {
   // const { postCount, isPostCountLoading } = usePostCount();
 
   const [user, dispatch] = useReducer(userReducer, initialUserState);
+  const inputRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,8 +66,15 @@ export default function Home() {
         />
         <button type="submit">버튼</button>
       </form>
+      <Test />
       <ErrorBoundary>
-        <HomeBorder />
+        <button type="button" onClick={() => inputRef.current.customFocus()}>
+          포커스 버튼
+        </button>
+        <button type="button" onClick={() => inputRef.current.customBlur()}>
+          블러 버튼
+        </button>
+        <HomeBorder a={5} ref={inputRef} />
       </ErrorBoundary>
     </div>
   );
