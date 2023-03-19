@@ -7,13 +7,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 
 root.render(
-  <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
-    <ReactQueryDevtools initialIsOpen={false} />
-  </QueryClientProvider>
+  // <QueryClientProvider client={queryClient}>
+  <BrowserRouter>
+    <Router />
+  </BrowserRouter>
+  // {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+  // </QueryClientProvider>
 );

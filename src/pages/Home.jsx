@@ -74,7 +74,7 @@ export default function Home() {
         <button type="button" onClick={() => inputRef.current.customBlur()}>
           블러 버튼
         </button>
-        <HomeBorder a={5} ref={inputRef} />
+        <HomeBorder ref={inputRef} />
       </ErrorBoundary>
     </div>
   );

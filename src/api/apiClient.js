@@ -8,28 +8,31 @@ export const apiClient = axios.create({
   responseType: "json",
 });
 
-export const wrapPromise = (promise) => {
+export function wrapPromise(promise) {
   let status = "pending";
-  let result;
-  let suspender = promise.then(
-    (r) => {
+  let response;
+
+  const suspender = promise.then(
+    (res) => {
       status = "success";
-      result = r;
+      response = res;
     },
-    (e) => {
+    (err) => {
       status = "error";
-      result = e;
+      response = err;
     }
   );
-  return {
-    read() {
-      if (status === "pending") {
+
+  const read = () => {
+    switch (status) {
+      case "pending":
         throw suspender;
-      } else if (status === "error") {
-        throw result;
-      } else if (status === "success") {
-        return result;
-      }
-    },
+      case "error":
+        throw response;
+      default:
+        return response;
+    }
   };
-};
+
+  return { read };
+}

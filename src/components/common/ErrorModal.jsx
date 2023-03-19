@@ -7,7 +7,7 @@ export default function ErrorModal({ error }) {
   const navigate = useNavigate();
 
   const handleConfirmClick = () => {
-    navigate("/home");
+    navigate("/");
   };
 
   return (

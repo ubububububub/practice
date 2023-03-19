@@ -4,18 +4,28 @@ import HookForm from "../pages/HookForm";
 import Home from "../pages/Home";
 import Form from "../pages/Form";
 import RefForm from "../pages/RefForm";
+import SubHome from "../pages/SubHome";
+import ErrorBoundary from "../components/common/ErrorBoundary";
 
 export default function Router() {
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/form" element={<Form />} />
-          <Route path="/refform" element={<RefForm />} />
-          <Route path="/hookform" element={<HookForm />} />
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/subhome"
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <ErrorBoundary>
+                <SubHome />
+              </ErrorBoundary>
+            </Suspense>
+          }
+        />
+        <Route path="/form" element={<Form />} />
+        <Route path="/refform" element={<RefForm />} />
+        <Route path="/hookform" element={<HookForm />} />
+      </Routes>
     </>
   );
 }
