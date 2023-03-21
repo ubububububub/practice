@@ -6,6 +6,7 @@ import Form from "../pages/Form";
 import RefForm from "../pages/RefForm";
 import SubHome from "../pages/SubHome";
 import ErrorBoundary from "../components/common/ErrorBoundary";
+import Graph from "../pages/Graph";
 
 export default function Router() {
   return (
@@ -25,6 +26,7 @@ export default function Router() {
         <Route path="/form" element={<Form />} />
         <Route path="/refform" element={<RefForm />} />
         <Route path="/hookform" element={<HookForm />} />
+        <Route path="/graph" element={<Graph />} />
       </Routes>
     </>
   );
