@@ -29,7 +29,8 @@ export default function Graph() {
         borderWidth: 1,
       },
     },
-    responsive: false,
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       tooltip: {
         enabled: false,
